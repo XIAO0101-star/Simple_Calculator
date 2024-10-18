@@ -9,14 +9,12 @@ pipeline {
       }
     }
 
-  stage('Install Dependencies') {
-    steps {
-      // Use 'bat' for Windows environment
-      bat 'pip install -r requirements.txt'
+    stage('Install Dependencies') {
+      steps {
+        // Use 'bat' for Windows environment
+        bat 'pip install -r requirements.txt'
+      }
     }
-  }
-  
-  stages {
     stage('Build') {
       steps {
         // Build steps here
@@ -42,7 +40,6 @@ pipeline {
       }
     }
   }
-}
   post {
     success {
       echo 'Build and test stages completed successfully.'
