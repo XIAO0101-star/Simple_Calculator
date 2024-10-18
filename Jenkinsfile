@@ -6,7 +6,7 @@ pipeline {
       steps {
         deleteDir() // Optional: Clear workspace
         git branch: 'main', url:
-'https://github.com/YOUR-USERNAME/YOUR-REPO.git'
+'https://github.com/XIAO0101-star/Simple_Calculator.git'
       }
     }
 
