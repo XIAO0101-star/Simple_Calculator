@@ -34,27 +34,18 @@ pipeline {
         }
       }
     }
-    stage('Deploy') {
-      steps {
-        // Deploy steps here
-        script {
-          // Create a temporary directory for deployment
-          sh 'mkdir -p temp-deploy'
-          sh 'cp -r dist/* temp-deploy/' // Adjust based on your output directory
-
-          // Navigate to temp-deploy directory
-          dir('temp-deploy') {
-            // Initialize a new git repository
-            sh 'git init'
-            sh 'git config user.name "XIAO0101-star"'
-            sh 'git config user.email "b0175466e@gmail.com"'
-            sh 'git add .'
-            sh 'git commit -m "Deploy to GitHub Pages"'
-            sh "git push --force --quiet https://@github.com/XIAO0101-star/Simple_Calculator.git"
-          }
+    stage('Deploy to GitHub Pages') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    sh """
+                        npm install -g --silent gh-pages@2.1.1
+                        git config user.email "b0175466e@gmail.com"
+                        git config user.name "XIAO0101-star"
+                        gh-pages --dotfiles --message '[skip ci] Updates' --dist build
+                    """
+                }
+            }
         }
-      }
-    }
   }
   post {
     success {
